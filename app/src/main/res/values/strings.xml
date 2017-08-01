@@ -32,4 +32,8 @@
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
 
+    <!--Stock details activity-->
+    <string name="intent_symbol_key">SYMBOL_KEY</string>
+    <string name="new_line_char">\n</string>
 </resources>
+
