@@ -8,11 +8,15 @@
         android:id="@+id/dialog_stock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/db_margin_side_bottom"
+        android:layout_marginLeft="@dimen/db_margin_side_bottom"
+        android:layout_marginStart="@dimen/db_margin_side_bottom"
+        android:layout_marginRight="@dimen/db_margin_side_bottom"
+        android:layout_marginEnd="@dimen/db_margin_side_bottom"
+        android:layout_marginTop="@dimen/db_margin_top"
         android:hint="@string/dialog_hint"
-        android:inputType="textCapCharacters" />
+        android:inputType="textCapCharacters"
+        android:contentDescription="@string/dialog_content_decrip"
+        />
 
 </LinearLayout>

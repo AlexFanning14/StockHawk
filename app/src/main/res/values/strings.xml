@@ -32,8 +32,15 @@
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
 
+    <string name="fab_content_descip">Click here to add a stock.</string>
+    <string name="dialog_content_decrip">Enter stock name.</string>
+    <string name="dialog_add_content_decrip">Click add to finish adding stock.</string>
+    <!--<string name="dialog_content_decrip">Enter stock name.</string>-->
+
     <!--Stock details activity-->
     <string name="intent_symbol_key">SYMBOL_KEY</string>
+    <string name="intent_price_key">PRICE_KEY</string>
     <string name="new_line_char">\n</string>
+    <string name="rv_error">Apologies, There has been an error getting this stocks history.</string>
 </resources>
 

@@ -1,15 +1,22 @@
 package com.udacity.stockhawk.ui;
 
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.net.Uri;
+import android.support.v4.app.LoaderManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.udacity.stockhawk.R;
+import com.udacity.stockhawk.StockHistoryLoader;
 import com.udacity.stockhawk.data.Contract;
 
 import java.math.BigDecimal;
@@ -25,11 +32,20 @@ import java.util.Locale;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.quotes.stock.StockQuote;
 
-public class StockDetailsActivity extends AppCompatActivity {
+public class StockDetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<HistoricalQuote>> {
     private static final String TAG = StockDetailsActivity.class.getSimpleName();
     private final DecimalFormat DOLLAR_FORMAT = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
 
-    private static String sSymbol;
+    private String mSymbol;
+    private float mCurrentPrice;
+    private RecyclerView mRvHistory;
+    private TextView mTvSymbolHeader;
+    private TextView mTvPriceHeader;
+    private StockHistoryAdapter mHisAdapter;
+    private TextView mTvErrorRv;
+
+    private static final String CURRENT_PRICE_STR = "Current Price: ";
+    private static final String HISTORY_STR = " History";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +53,27 @@ public class StockDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stock_details);
 
         setUpActionBar();
-        getSymbol();
-        getHistoryForSymbol();
+        findViews();
+
+        mRvHistory.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        mRvHistory.setHasFixedSize(true);
+        getAndSetHeaderValues();
+
+        getSupportLoaderManager().initLoader(StockHistoryLoader.HISTORY_LOADER_ID,null,this);
+        setUpLoader();
 
     }
+
+    private void setUpLoader(){
+        LoaderManager lm = getSupportLoaderManager();
+        android.support.v4.content.Loader<ArrayList<HistoricalQuote>> hisLoader = lm.getLoader(StockHistoryLoader.HISTORY_LOADER_ID);
+        if (hisLoader == null){
+            lm.initLoader(StockHistoryLoader.HISTORY_LOADER_ID,null,this);
+        }else{
+            lm.restartLoader(StockHistoryLoader.HISTORY_LOADER_ID,null,this).forceLoad();
+        }
+    }
+
 
     private void setUpActionBar(){
         ActionBar ab = this.getSupportActionBar();
@@ -49,65 +82,56 @@ public class StockDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void getSymbol(){
+    private void findViews(){
+        mTvSymbolHeader = (TextView) findViewById(R.id.tv_symbol_header);
+        mTvPriceHeader = (TextView) findViewById(R.id.tv_price_header);
+        mRvHistory = (RecyclerView)findViewById(R.id.rv_history);
+        mTvErrorRv = (TextView) findViewById(R.id.rv_error);
+    }
+
+    private void getAndSetHeaderValues(){
         Intent i = getIntent();
-        if (i.hasExtra(getString(R.string.intent_symbol_key))){
-            sSymbol = i.getStringExtra(getString(R.string.intent_symbol_key));
+        if (i.hasExtra(getString(R.string.intent_symbol_key)) && i.hasExtra(getString(R.string.intent_price_key))){
+            mSymbol = i.getStringExtra(getString(R.string.intent_symbol_key));
+            mCurrentPrice = i.getFloatExtra(getString(R.string.intent_price_key),0);
+
+            mTvSymbolHeader.setText(mSymbol);
+            mTvPriceHeader.setText(CURRENT_PRICE_STR + DOLLAR_FORMAT.format(mCurrentPrice));
+            setTitle(mSymbol + HISTORY_STR );
+
         }
     }
 
-    private void getHistoryForSymbol(){
-        Cursor c = null;
-        String name = sSymbol;
+    @Override
+    public android.support.v4.content.Loader<ArrayList<HistoricalQuote>> onCreateLoader(int id, Bundle args) {
 
-        String price;
-        String fullHistString;
-        ArrayList<HistoricalQuote> alHistory;
-      //  try{
-            Uri uri = Contract.Quote.URI;
-            uri = uri.buildUpon().appendPath(sSymbol).build();
-            c = getContentResolver().query(uri,null,null,null,null);
-            c.moveToFirst();
-            price = DOLLAR_FORMAT.format(c.getFloat(Contract.Quote.POSITION_PRICE));
-            fullHistString = c.getString(Contract.Quote.POSITION_HISTORY);
-            getQuotesFromString(fullHistString);
+            StockHistoryLoader sl = new StockHistoryLoader(this,mSymbol);
+            return sl;
 
-            Log.d(TAG, "getHistoryForSymbol: Price:" + price + " History:" + fullHistString);
-       // }catch(Exception e){
-
-        //}
     }
 
+    @Override
+    public void onLoadFinished(android.support.v4.content.Loader<ArrayList<HistoricalQuote>> loader, ArrayList<HistoricalQuote> alHq) {
+        displayHistory(alHq);
+    }
 
-    private void getQuotesFromString(String fullHistQuote){
-        ArrayList<HistoricalQuote> alHistory = new ArrayList<>();
-        String[] historyLines =  fullHistQuote.split(getString(R.string.new_line_char));
-        //DateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        for (String line : historyLines){
-            String[] historyParts = line.split(",");
-            String dateInMillis = historyParts[0];
-            long ms = Long.parseLong(dateInMillis);
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(ms);
-            //String price =  DOLLAR_FORMAT.format(historyParts[1]);
-            String price =  historyParts[1].trim();
-            Log.d(TAG, "Price: " + price);
-            HistoricalQuote hq = new HistoricalQuote();
-            hq.setDate(cal);
-            hq.setClose(new BigDecimal(price));
-            alHistory.add(hq);
+    @Override
+    public void onLoaderReset(android.support.v4.content.Loader<ArrayList<HistoricalQuote>> loader) {
+        //Do nothing
+    }
+
+    private void displayHistory(ArrayList<HistoricalQuote> alHq){
+        if (alHq == null){
+            mTvErrorRv.setVisibility(View.VISIBLE);
+            mRvHistory.setVisibility(View.GONE);
+        }else{
+            mTvErrorRv.setVisibility(View.GONE);
+            mRvHistory.setVisibility(View.VISIBLE);
+            mHisAdapter = new StockHistoryAdapter(alHq,this);
+            mRvHistory.setAdapter(mHisAdapter);
         }
-        String a = "ee";
-        Log.d(TAG, "Al his COunt: " + alHistory.size());
+
     }
-
-//    for (HistoricalQuote it : history) {
-//        historyBuilder.append(it.getDate().getTimeInMillis());
-//        historyBuilder.append(", ");
-//        historyBuilder.append(it.getClose());
-//        historyBuilder.append("\n");
-//    }
-
 
 }
 

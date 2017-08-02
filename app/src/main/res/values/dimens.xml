@@ -1,6 +1,25 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
 
+    <dimen name="margin_standard">10dp</dimen>
+    <!--DialogBox-->
+    <dimen name="db_margin_side_bottom">4dp</dimen>
+    <dimen name="db_margin_top">10dp</dimen>
+
+
+    <!--List Item Quote-->
+    <dimen name="quote_margin_0">0dp</dimen>
+    <dimen name="quote_padding">16dp</dimen>
+    <dimen name="quote_margin_end">10dp</dimen>
+    <dimen name="dimen_padding_quote_sides">3dp</dimen>
     <!--activity stock details-->
-    <dimen name="header_size">32sp</dimen>
+    <dimen name="header_text_size">32sp</dimen>
+    <dimen name="header_size">100dp</dimen>
+
+
+    <!--FAB-->
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_border_width">0dp</dimen>
+    <dimen name="fab_elavation">6dp</dimen>
+    <dimen name="fab_pressed_trans">12dp</dimen>
 </resources>
