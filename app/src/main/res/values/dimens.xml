@@ -22,4 +22,8 @@
     <dimen name="fab_border_width">0dp</dimen>
     <dimen name="fab_elavation">6dp</dimen>
     <dimen name="fab_pressed_trans">12dp</dimen>
+
+    <!--Widget-->
+    <dimen name="widget_height">110dp</dimen>
+    <dimen name="widget_width">250dp</dimen>
 </resources>

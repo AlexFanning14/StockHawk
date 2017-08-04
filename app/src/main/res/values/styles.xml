@@ -23,6 +23,7 @@
     <!--End hardcoded section-->
     <style name="HeaderTextStyle">
         <item name="android:textSize">@dimen/header_text_size</item>
+
         <item name="android:textAllCaps">true</item>
     </style>
 

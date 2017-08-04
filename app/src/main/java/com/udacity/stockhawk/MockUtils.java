@@ -138,7 +138,7 @@ public class MockUtils {
         // Parse CSV
         for (String line = br.readLine(); line != null; line = br.readLine()) {
 
-            YahooFinance.logger.log(Level.INFO, ("Parsing CSV line: " + Utils.unescape(line)));
+//            YahooFinance.logger.log(Level.INFO, ("Parsing CSV line: " + Utils.unescape(line)));
             HistoricalQuote historicalQuote = MockUtils.parseCSVLine(line);
             history.add(historicalQuote);
         }
