@@ -18,9 +18,7 @@ import com.udacity.stockhawk.ui.StockDetailsActivity;
 public class StockWidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
-        int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,AppWidgetManager.INVALID_APPWIDGET_ID);
-        Intent i = new Intent(context,StockDetailsActivity.class);
-        context.startActivity(i);
+
         super.onReceive(context, intent);
     }
 
@@ -64,6 +62,8 @@ public class StockWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getActivity(c,appWidgetId,appIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         views.setPendingIntentTemplate(R.id.symbol_widget,pendingIntent);
         awm.updateAppWidget(appWidgetId,views);
+
+
     }
 
 
