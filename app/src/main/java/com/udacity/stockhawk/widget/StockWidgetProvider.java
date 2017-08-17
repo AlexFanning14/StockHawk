@@ -1,4 +1,4 @@
-package com.udacity.stockhawk;
+package com.udacity.stockhawk.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
+import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.ui.MainActivity;
 import com.udacity.stockhawk.ui.StockDetailsActivity;
 
@@ -27,9 +28,6 @@ public class StockWidgetProvider extends AppWidgetProvider {
         for (int appWidgetID : appWidgetIds){
             updateAppWidget(context,appWidgetManager,appWidgetID);
         }
-
-
-
     }
 
 
@@ -52,11 +50,11 @@ public class StockWidgetProvider extends AppWidgetProvider {
 
     static void updateAppWidget(Context c, AppWidgetManager awm, int appWidgetId){
 
-        RemoteViews views = new RemoteViews(c.getPackageName(),R.layout.widget_list_view);
+        RemoteViews views = new RemoteViews(c.getPackageName(), R.layout.widget_list_view);
         Intent i = new Intent(c,StockWidgetService.class);
         views.setRemoteAdapter(R.id.widget_list_view,i);
 
-        Intent appIntent = new Intent(c, StockDetailsActivity.class);
+        Intent appIntent = new Intent(c, MainActivity.class);
         appIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
         appIntent.setData(Uri.parse(appIntent.toUri(Intent.URI_INTENT_SCHEME)));
         PendingIntent pendingIntent = PendingIntent.getActivity(c,appWidgetId,appIntent,PendingIntent.FLAG_UPDATE_CURRENT);

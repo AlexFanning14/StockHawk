@@ -5,26 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="5"
     tools:context="com.udacity.stockhawk.ui.StockDetailsActivity"
     >
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/header_size"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="2"
         >
-
-
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_symbol_header"
         style="@style/HeaderTextStyle"
-        android:layout_weight="1"
         android:gravity="center"
         />
 
@@ -34,23 +29,27 @@
             android:id="@+id/tv_price_header"
             style="@style/HeaderTextStyle"
             android:gravity="center"
-            android:layout_weight="1"
+            />
+
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_history"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_error"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/rv_error"
             />
 
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_history"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_error"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="@string/rv_error"
-        />
+
+
 
 
 </LinearLayout>

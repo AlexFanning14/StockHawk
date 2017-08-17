@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     void addStock(String symbol) {
-        if (symbol != null && !symbol.isEmpty()) {
+        if (symbol != null && !symbol.isEmpty() && symbol.matches("[a-zA-Z]+")) {
 
             if (networkUp()) {
                 swipeRefreshLayout.setRefreshing(true);
@@ -144,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             PrefUtils.addStock(this, symbol);
             QuoteSyncJob.syncImmediately(this);
+        }
+        else{
+            Toast.makeText(this,"Invalid stock entered, letters only.", Toast.LENGTH_LONG).show();
         }
     }
 

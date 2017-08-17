@@ -14,7 +14,7 @@
     <dimen name="dimen_padding_quote_sides">3dp</dimen>
     <!--activity stock details-->
     <dimen name="header_text_size">32sp</dimen>
-    <dimen name="header_size">100dp</dimen>
+    <dimen name="header_size">125dp</dimen>
 
 
     <!--FAB-->
