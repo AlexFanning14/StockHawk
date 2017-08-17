@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 
 import com.udacity.stockhawk.R;
-import com.udacity.stockhawk.ui.MainActivity;
 import com.udacity.stockhawk.ui.StockDetailsActivity;
 
 /**
@@ -28,9 +27,8 @@ public class StockWidgetProvider extends AppWidgetProvider {
         for (int appWidgetID : appWidgetIds){
             updateAppWidget(context,appWidgetManager,appWidgetID);
         }
+
     }
-
-
 
 
     @Override
@@ -54,7 +52,7 @@ public class StockWidgetProvider extends AppWidgetProvider {
         Intent i = new Intent(c,StockWidgetService.class);
         views.setRemoteAdapter(R.id.widget_list_view,i);
 
-        Intent appIntent = new Intent(c, MainActivity.class);
+        Intent appIntent = new Intent(c, StockDetailsActivity.class);
         appIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
         appIntent.setData(Uri.parse(appIntent.toUri(Intent.URI_INTENT_SCHEME)));
         PendingIntent pendingIntent = PendingIntent.getActivity(c,appWidgetId,appIntent,PendingIntent.FLAG_UPDATE_CURRENT);

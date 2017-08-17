@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -26,8 +27,8 @@ public class StockWidgetService extends RemoteViewsService {
 }
 
 class StockWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
-
-    private final DecimalFormat DOLLAR_FORMAT = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+    private static final String TAG = StockWidgetRemoteViewsFactory.class.getSimpleName();
+    private static final DecimalFormat DOLLAR_FORMAT = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
 
 
     Context mContext;
@@ -56,7 +57,12 @@ class StockWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public void onDestroy() {
-        mCursor.close();
+        try{
+            mCursor.close();
+        }catch(Exception e){
+            Log.e(TAG, "onDestroy: Error");
+        }
+
     }
 
     @Override
