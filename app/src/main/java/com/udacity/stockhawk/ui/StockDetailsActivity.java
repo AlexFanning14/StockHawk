@@ -104,10 +104,8 @@ public class StockDetailsActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public android.support.v4.content.Loader<ArrayList<HistoricalQuote>> onCreateLoader(int id, Bundle args) {
-
             StockHistoryLoader sl = new StockHistoryLoader(this,mSymbol);
             return sl;
-
     }
 
     @Override

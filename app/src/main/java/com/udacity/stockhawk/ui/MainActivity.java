@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             PrefUtils.addStock(this, symbol);
             QuoteSyncJob.syncImmediately(this);
+            //QuoteSyncJob.syncImmediately(this);
         }
         else{
             Toast.makeText(this,"Invalid stock entered, letters only.", Toast.LENGTH_LONG).show();

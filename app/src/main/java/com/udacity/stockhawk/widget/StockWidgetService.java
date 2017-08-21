@@ -84,13 +84,13 @@ class StockWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         views.setTextViewText(R.id.symbol_widget,symbol);
         views.setTextViewText(R.id.price_widget,priceStr);
 
-        Bundle extras = new Bundle();
-        extras.putString(mContext.getString(R.string.intent_symbol_key),symbol);
-        extras.putString(mContext.getString(R.string.intent_price_key),priceStr);
-
-        Intent fillInIntent = new Intent();
-        fillInIntent.putExtras(extras);
-        views.setOnClickFillInIntent(R.id.symbol_widget,fillInIntent);
+//        Bundle extras = new Bundle();
+//        extras.putString(mContext.getString(R.string.intent_symbol_key),symbol);
+//        extras.putString(mContext.getString(R.string.intent_price_key),priceStr);
+//
+//        Intent fillInIntent = new Intent();
+//        fillInIntent.putExtras(extras);
+//        views.setOnClickFillInIntent(R.id.symbol_widget,fillInIntent);
 
         return views;
     }

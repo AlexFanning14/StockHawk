@@ -52,16 +52,13 @@ public class StockWidgetProvider extends AppWidgetProvider {
         Intent i = new Intent(c,StockWidgetService.class);
         views.setRemoteAdapter(R.id.widget_list_view,i);
 
-        Intent appIntent = new Intent(c, StockDetailsActivity.class);
-        appIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
-        appIntent.setData(Uri.parse(appIntent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent pendingIntent = PendingIntent.getActivity(c,appWidgetId,appIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.symbol_widget,pendingIntent);
+//        Intent appIntent = new Intent(c, StockDetailsActivity.class);
+//        appIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);
+//        appIntent.setData(Uri.parse(appIntent.toUri(Intent.URI_INTENT_SCHEME)));
+//        PendingIntent pendingIntent = PendingIntent.getActivity(c,appWidgetId,appIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+//        views.setPendingIntentTemplate(R.id.symbol_widget,pendingIntent);
         awm.updateAppWidget(appWidgetId,views);
-
-
     }
-
 
 }
 

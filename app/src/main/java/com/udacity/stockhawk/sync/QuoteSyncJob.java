@@ -42,16 +42,21 @@ public final class QuoteSyncJob {
     private static final int PERIODIC_ID = 1;
     private static final int YEARS_OF_HISTORY = 2;
 
+    private static final String NEW_LINE = "\n";
+    private static final String COMMA_SPACE = ", ";
+    private static final String EMPTY_STRING = "";
+
     private QuoteSyncJob() {
     }
 
-    static void getQuotes(Context context) {
+    static String getQuotes(Context context) {
 
         Timber.d("Running sync job");
 
         Calendar from = Calendar.getInstance();
-        Calendar to = Calendar.getInstance();
+
         from.add(Calendar.YEAR, -YEARS_OF_HISTORY);
+        String errorSymbol = EMPTY_STRING;
 
         try {
 
@@ -63,7 +68,7 @@ public final class QuoteSyncJob {
             Timber.d(stockCopy.toString());
 
             if (stockArray.length == 0) {
-                return;
+                return null;
             }
 
             Map<String, Stock> quotes = YahooFinance.get(stockArray);
@@ -80,9 +85,9 @@ public final class QuoteSyncJob {
                 Stock stock = quotes.get(symbol);
                 StockQuote quote= stock.getQuote();
 
-
-
                 if (quote.getPrice() == null || quote.getPreviousClose()  == null){
+                    errorSymbol = symbol;
+                    PrefUtils.removeStock(context,errorSymbol);
                     continue;
                 }
 
@@ -99,15 +104,13 @@ public final class QuoteSyncJob {
                 //This should be enough as to develop and review while the API is down
                 List<HistoricalQuote> history = MockUtils.getHistory();
 
-
-
                 StringBuilder historyBuilder = new StringBuilder();
 
                 for (HistoricalQuote it : history) {
                     historyBuilder.append(it.getDate().getTimeInMillis());
-                    historyBuilder.append(", ");
+                    historyBuilder.append(COMMA_SPACE);
                     historyBuilder.append(it.getClose());
-                    historyBuilder.append("\n");
+                    historyBuilder.append(NEW_LINE);
                 }
 
                 ContentValues quoteCV = new ContentValues();
@@ -117,7 +120,7 @@ public final class QuoteSyncJob {
                 quoteCV.put(Contract.Quote.COLUMN_ABSOLUTE_CHANGE, change);
 
                 String hisStr = historyBuilder.toString();
-                quoteCV.put(Contract.Quote.COLUMN_HISTORY, historyBuilder.toString());
+                quoteCV.put(Contract.Quote.COLUMN_HISTORY, hisStr);
 
                 quoteCVs.add(quoteCV);
 
@@ -130,9 +133,10 @@ public final class QuoteSyncJob {
 
             Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
             context.sendBroadcast(dataUpdatedIntent);
-
+            return errorSymbol;
         } catch (IOException exception) {
             Timber.e(exception, "Error fetching stock quotes");
+            return null;
         }
     }
 
