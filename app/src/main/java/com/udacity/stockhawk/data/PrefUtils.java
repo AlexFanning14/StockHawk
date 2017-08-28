@@ -51,6 +51,7 @@ public final class PrefUtils {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putStringSet(key, stocks);
         editor.apply();
+
     }
 
     public static void addStock(Context context, String symbol) {

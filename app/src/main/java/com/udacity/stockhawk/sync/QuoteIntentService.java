@@ -30,7 +30,7 @@ public class QuoteIntentService extends IntentService {
 
     private void ShowToastInIntentService(final String ERROR_SYMBOLS){
         final Context MY_CONTEXT = this;
-        final String TOAST_OUTPUT = "Unable the stock:" + ERROR_SYMBOLS;
+        final String TOAST_OUTPUT = "Unable to find the stock:" + ERROR_SYMBOLS;
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {

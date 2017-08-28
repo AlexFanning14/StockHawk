@@ -74,7 +74,6 @@ public class StockProvider extends ContentProvider {
         if (context != null){
             returnCursor.setNotificationUri(context.getContentResolver(), uri);
         }
-        String a = DatabaseUtils.dumpCursorToString(returnCursor);
         return returnCursor;
     }
 
