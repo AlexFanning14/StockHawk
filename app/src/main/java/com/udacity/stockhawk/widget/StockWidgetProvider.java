@@ -63,7 +63,7 @@ public class StockWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(c.getPackageName(), R.layout.widget_list_view);
         Intent i = new Intent(c, StockWidgetService.class);
         views.setRemoteAdapter(R.id.widget_list_view, i);
-        
+
 
         awm.updateAppWidget(appWidgetId, views);
     }
