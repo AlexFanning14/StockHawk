@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.udacity.stockhawk.R;
-import com.udacity.stockhawk.StockHistoryLoader;
+import com.udacity.stockhawk.data.StockHistoryLoader;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

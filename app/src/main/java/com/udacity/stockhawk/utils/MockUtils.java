@@ -1,4 +1,4 @@
-package com.udacity.stockhawk;
+package com.udacity.stockhawk.utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

@@ -1,11 +1,11 @@
-package com.udacity.stockhawk;
+package com.udacity.stockhawk.data;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.udacity.stockhawk.data.Contract;
+import com.udacity.stockhawk.R;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
