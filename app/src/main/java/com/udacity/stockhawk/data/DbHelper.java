@@ -8,7 +8,7 @@ import com.udacity.stockhawk.data.Contract.Quote;
 
 
 class DbHelper extends SQLiteOpenHelper {
-
+    //Hardcoded strings in this file were here upon receiving project.
 
     private static final String NAME = "StockHawk.db";
     private static final int VERSION = 1;

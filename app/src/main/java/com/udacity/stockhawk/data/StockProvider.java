@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -17,9 +16,13 @@ public class StockProvider extends ContentProvider {
     private static final int QUOTE = 100;
     private static final int QUOTE_FOR_SYMBOL = 101;
 
+
     private static final UriMatcher uriMatcher = buildUriMatcher();
 
     private DbHelper dbHelper;
+
+    private static final String URI_QUESTION_MARK = " = ?";
+    private static final String UNKNOWN_URI = "Unknown URI:";
 
     private static UriMatcher buildUriMatcher() {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -58,7 +61,7 @@ public class StockProvider extends ContentProvider {
                 returnCursor = db.query(
                         Contract.Quote.TABLE_NAME,
                         projection,
-                        Contract.Quote.COLUMN_SYMBOL + " = ?",
+                        Contract.Quote.COLUMN_SYMBOL + URI_QUESTION_MARK,
                         new String[]{Contract.Quote.getStockFromUri(uri)},
                         null,
                         null,
@@ -67,11 +70,11 @@ public class StockProvider extends ContentProvider {
 
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown URI:" + uri);
+                throw new UnsupportedOperationException(UNKNOWN_URI + uri);
         }
 
         Context context = getContext();
-        if (context != null){
+        if (context != null) {
             returnCursor.setNotificationUri(context.getContentResolver(), uri);
         }
         return returnCursor;
@@ -99,17 +102,18 @@ public class StockProvider extends ContentProvider {
                 returnUri = Contract.Quote.URI;
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown URI:" + uri);
+                throw new UnsupportedOperationException(UNKNOWN_URI + uri);
         }
 
         Context context = getContext();
-        if (context != null){
+        if (context != null) {
             context.getContentResolver().notifyChange(uri, null);
         }
 
         return returnUri;
     }
 
+    //Hardcoded Strings in this method were here upon receiving project
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -137,12 +141,12 @@ public class StockProvider extends ContentProvider {
                 );
                 break;
             default:
-                throw new UnsupportedOperationException("Unknown URI:" + uri);
+                throw new UnsupportedOperationException(UNKNOWN_URI + uri);
         }
 
         if (rowsDeleted != 0) {
             Context context = getContext();
-            if (context != null){
+            if (context != null) {
                 context.getContentResolver().notifyChange(uri, null);
             }
         }

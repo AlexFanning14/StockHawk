@@ -9,14 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/db_margin_side_bottom"
-        android:layout_marginLeft="@dimen/db_margin_side_bottom"
-        android:layout_marginStart="@dimen/db_margin_side_bottom"
-        android:layout_marginRight="@dimen/db_margin_side_bottom"
         android:layout_marginEnd="@dimen/db_margin_side_bottom"
+        android:layout_marginLeft="@dimen/db_margin_side_bottom"
+        android:layout_marginRight="@dimen/db_margin_side_bottom"
+        android:layout_marginStart="@dimen/db_margin_side_bottom"
         android:layout_marginTop="@dimen/db_margin_top"
-        android:hint="@string/dialog_hint"
-        android:inputType="textCapCharacters"
         android:contentDescription="@string/dialog_content_decrip"
-        />
+        android:hint="@string/dialog_hint"
+        android:inputType="textCapCharacters" />
 
 </LinearLayout>

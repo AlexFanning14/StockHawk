@@ -19,7 +19,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import yahoofinance.quotes.stock.StockQuote;
 
 class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
@@ -30,6 +29,8 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     private Cursor cursor;
     private final StockAdapterOnClickHandler clickHandler;
 
+
+    //Hardcoded Strings and integers were in this constructor upon receiving project
     StockAdapter(Context context, StockAdapterOnClickHandler clickHandler) {
         this.context = context;
         this.clickHandler = clickHandler;
@@ -91,7 +92,6 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
             holder.change.setText(percentage);
         }
 
-
     }
 
     @Override
@@ -131,7 +131,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
             cursor.moveToPosition(adapterPosition);
             int symbolColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_SYMBOL);
             int currentPriceCol = cursor.getColumnIndex(Contract.Quote.COLUMN_PRICE);
-            clickHandler.onClick(cursor.getString(symbolColumn),cursor.getFloat(currentPriceCol));
+            clickHandler.onClick(cursor.getString(symbolColumn), cursor.getFloat(currentPriceCol));
 
 
         }

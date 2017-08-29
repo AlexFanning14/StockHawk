@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -26,16 +25,11 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
-import yahoofinance.quotes.stock.StockQuote;
+
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
@@ -53,12 +47,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     TextView error;
     private StockAdapter adapter;
 
+    private static final String A_Z_REGEX = "[a-zA-Z]+";
+
+
     @Override
     public void onClick(String symbol, float currentPrice) {
         Timber.d("Symbol clicked: %s", symbol);
-        Intent i = new Intent(this,StockDetailsActivity.class);
-        i.putExtra(getString(R.string.intent_symbol_key),symbol);
-        i.putExtra(getString(R.string.intent_price_key),currentPrice);
+        Intent i = new Intent(this, StockDetailsActivity.class);
+        i.putExtra(getString(R.string.intent_symbol_key), symbol);
+        i.putExtra(getString(R.string.intent_price_key), currentPrice);
         startActivity(i);
     }
 
@@ -126,12 +123,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
+    //Hardcoded string was in this method upon receiving the project
     public void button(@SuppressWarnings("UnusedParameters") View view) {
         new AddStockDialog().show(getFragmentManager(), "StockDialogFragment");
     }
 
     void addStock(String symbol) {
-        if (symbol != null && !symbol.isEmpty() && symbol.matches("[a-zA-Z]+")) {
+        if (symbol != null && !symbol.isEmpty() && symbol.matches(A_Z_REGEX)) {
 
             if (networkUp()) {
                 swipeRefreshLayout.setRefreshing(true);
@@ -142,10 +140,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             PrefUtils.addStock(this, symbol);
             QuoteSyncJob.syncImmediately(this);
-            //QuoteSyncJob.syncImmediately(this);
-        }
-        else{
-            Toast.makeText(this,"Invalid stock entered, letters only.", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getString(R.string.invalid_stock_entry_toast), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -174,13 +170,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         adapter.setCursor(null);
     }
 
-
+    //https://stackoverflow.com/questions/36798296/setting-content-description-for-option-menu-android-talkback
+    //According to this StackOverflow post , new in API26 (Android O) it is possible to setContentDescription for menuItems, however due to still using API 25,
+    //I have set the title to a content description. According to the post, the content description is set when setting title.
     private void setDisplayModeMenuItemIcon(MenuItem item) {
+
         if (PrefUtils.getDisplayMode(this)
                 .equals(getString(R.string.pref_display_mode_absolute_key))) {
             item.setIcon(R.drawable.ic_percentage);
+            item.setTitle(R.string.menu_percent);
         } else {
             item.setIcon(R.drawable.ic_dollar);
+            item.setTitle(R.string.menu_dollar);
         }
     }
 

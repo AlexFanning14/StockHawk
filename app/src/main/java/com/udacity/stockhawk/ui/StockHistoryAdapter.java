@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.stockhawk.R;
-import com.udacity.stockhawk.data.Contract;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -33,7 +32,7 @@ public class StockHistoryAdapter extends RecyclerView.Adapter<StockHistoryAdapte
     private final DecimalFormat DOLLAR_FORMAT = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
 
 
-    public StockHistoryAdapter(ArrayList<HistoricalQuote> _alHistory,Context _c){
+    public StockHistoryAdapter(ArrayList<HistoricalQuote> _alHistory, Context _c) {
         mAlHistory = _alHistory;
         context = _c;
     }
@@ -47,9 +46,8 @@ public class StockHistoryAdapter extends RecyclerView.Adapter<StockHistoryAdapte
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layoutIdForGridItem = R.layout.list_item_history;
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(layoutIdForGridItem,parent,false);
-        HistoryViewHolder viewHolder = new HistoryViewHolder(view);
-        return viewHolder;
+        View view = inflater.inflate(layoutIdForGridItem, parent, false);
+        return new HistoryViewHolder(view);
     }
 
     @Override
@@ -61,7 +59,7 @@ public class StockHistoryAdapter extends RecyclerView.Adapter<StockHistoryAdapte
         TextView mTvDate = null;
         TextView mTvPrice = null;
 
-        public  HistoryViewHolder(View itemView){
+        public HistoryViewHolder(View itemView) {
             super(itemView);
 
             mTvDate = (TextView) itemView.findViewById(R.id.tv_date_history);
@@ -69,8 +67,8 @@ public class StockHistoryAdapter extends RecyclerView.Adapter<StockHistoryAdapte
         }
 
 
-        void bind(HistoricalQuote hq){
-           Calendar cal = hq.getDate();
+        void bind(HistoricalQuote hq) {
+            Calendar cal = hq.getDate();
             String dateFormatted = formatter.format(cal.getTime());
             float price = hq.getClose().floatValue();
             String priceStr = DOLLAR_FORMAT.format(price);

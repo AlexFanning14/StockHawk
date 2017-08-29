@@ -3,7 +3,6 @@ package com.udacity.stockhawk.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -26,15 +25,15 @@ public class StockWidgetService extends RemoteViewsService {
     }
 }
 
-class StockWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory{
+class StockWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final String TAG = StockWidgetRemoteViewsFactory.class.getSimpleName();
     private static final DecimalFormat DOLLAR_FORMAT = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
 
 
-    Context mContext;
-    Cursor mCursor;
+    private Context mContext;
+    private Cursor mCursor;
 
-    public StockWidgetRemoteViewsFactory(Context appContext){
+    public StockWidgetRemoteViewsFactory(Context appContext) {
         mContext = appContext;
     }
 
@@ -57,9 +56,9 @@ class StockWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public void onDestroy() {
-        try{
+        try {
             mCursor.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "onDestroy: Error");
         }
 
@@ -81,16 +80,9 @@ class StockWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
         String priceStr = DOLLAR_FORMAT.format(price);
 
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_stock_view);
-        views.setTextViewText(R.id.symbol_widget,symbol);
-        views.setTextViewText(R.id.price_widget,priceStr);
+        views.setTextViewText(R.id.symbol_widget, symbol);
+        views.setTextViewText(R.id.price_widget, priceStr);
 
-//        Bundle extras = new Bundle();
-//        extras.putString(mContext.getString(R.string.intent_symbol_key),symbol);
-//        extras.putString(mContext.getString(R.string.intent_price_key),priceStr);
-//
-//        Intent fillInIntent = new Intent();
-//        fillInIntent.putExtras(extras);
-//        views.setOnClickFillInIntent(R.id.symbol_widget,fillInIntent);
 
         return views;
     }

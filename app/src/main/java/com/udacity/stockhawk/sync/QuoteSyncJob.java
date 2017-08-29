@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Looper;
-import android.widget.Toast;
 
 import com.udacity.stockhawk.MockUtils;
 import com.udacity.stockhawk.data.Contract;
@@ -23,14 +21,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import timber.log.Timber;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
 import yahoofinance.quotes.stock.StockQuote;
 
 public final class QuoteSyncJob {
@@ -83,11 +78,11 @@ public final class QuoteSyncJob {
 
 
                 Stock stock = quotes.get(symbol);
-                StockQuote quote= stock.getQuote();
+                StockQuote quote = stock.getQuote();
 
-                if (quote.getPrice() == null || quote.getPreviousClose()  == null){
+                if (quote.getPrice() == null || quote.getPreviousClose() == null) {
                     errorSymbol = symbol;
-                    PrefUtils.removeStock(context,errorSymbol);
+                    PrefUtils.removeStock(context, errorSymbol);
                     continue;
                 }
 

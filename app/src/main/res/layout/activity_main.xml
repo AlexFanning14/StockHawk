@@ -16,10 +16,10 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin" />
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -29,12 +29,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/fab_content_descip"
         android:onClick="button"
         android:src="@drawable/fab_plus"
         app:backgroundTint="@color/material_blue_500"
         app:borderWidth="@dimen/fab_border_width"
         app:elevation="@dimen/fab_elavation"
-        android:contentDescription="@string/fab_content_descip"
         app:fabSize="normal"
         app:pressedTranslationZ="@dimen/fab_pressed_trans" />
 
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:textAppearance="@android:style/TextAppearance.Medium"
-        android:visibility="gone"
-         />
+        android:visibility="gone" />
 </merge>

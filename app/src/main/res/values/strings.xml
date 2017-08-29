@@ -42,5 +42,12 @@
     <string name="intent_price_key" translatable="false">PRICE_KEY</string>
     <string name="new_line_char" translatable="false">\n</string>
     <string name="rv_error" translatable="true">Apologies, There has been an error getting this stocks history.</string>
+
+    <string name="invalid_stock_entry_toast" translatable="true">Invalid stock entered, letters only.</string>
+
+    <string name="menu_dollar" translatable="true">Dollar Sign</string>
+    <string name="menu_percent" translatable="true">Percentage Sign</string>
+
+
 </resources>
 

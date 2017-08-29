@@ -16,11 +16,12 @@ import java.util.logging.Level;
 import yahoofinance.Utils;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.quotes.stock.StockQuote;
 
 public class MockUtils {
 
-    public static String mockHistory =
+    //All hardcoded strings in this class were here upon receiving it
+
+    private static String mockHistory =
             "08/05/2017,68.970001,69.559998,68.040001,68.379997,20913200,68.379997\n" +
                     "01/05/2017,68.68,69.709999,68.489998,69,24889100,69\n" +
                     "24/04/2017,67.480003,69.139999,67.099998,68.459999,31679200,68.459999\n" +
@@ -138,7 +139,6 @@ public class MockUtils {
         // Parse CSV
         for (String line = br.readLine(); line != null; line = br.readLine()) {
 
-//            YahooFinance.logger.log(Level.INFO, ("Parsing CSV line: " + Utils.unescape(line)));
             HistoricalQuote historicalQuote = MockUtils.parseCSVLine(line);
             history.add(historicalQuote);
         }

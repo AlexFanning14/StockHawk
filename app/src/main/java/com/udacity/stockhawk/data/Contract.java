@@ -46,8 +46,8 @@ public final class Contract {
         }
 
         static String getStockFromUri(Uri queryUri) {
-            String stock = queryUri.getLastPathSegment();
-            return stock;
+
+            return queryUri.getLastPathSegment();
         }
 
 
