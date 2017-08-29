@@ -24,6 +24,7 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
+import com.udacity.stockhawk.widget.StockWidgetProvider;
 
 
 import butterknife.BindView;
@@ -120,7 +121,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             error.setVisibility(View.VISIBLE);
         } else {
             error.setVisibility(View.GONE);
+            StockWidgetProvider.updateWidgetDynamically(this);
         }
+
+
+
     }
 
     //Hardcoded string was in this method upon receiving the project
