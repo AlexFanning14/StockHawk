@@ -28,6 +28,8 @@ public class StockWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
     }
 
+    //TODO SUGGESTION It'd be nice UX when a user clicks on the Widget to launch the app or specific stock history
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetID : appWidgetIds) {

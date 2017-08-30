@@ -46,6 +46,7 @@ public class StockDetailsActivity extends AppCompatActivity implements LoaderMan
         mRvHistory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRvHistory.setHasFixedSize(true);
         getAndSetHeaderValues();
+        //TODO REQUIREMENT "Graph the stock value over time" - this should be a graphical representation
 
         getSupportLoaderManager().initLoader(StockHistoryLoader.HISTORY_LOADER_ID, null, this);
         setUpLoader();
