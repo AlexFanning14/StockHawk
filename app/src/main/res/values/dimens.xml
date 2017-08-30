@@ -26,4 +26,7 @@
     <!--Widget-->
     <dimen name="widget_height">110dp</dimen>
     <dimen name="widget_width">250dp</dimen>
+
+    <!--Graph-->
+    <dimen name="graph_height">200dp</dimen>
 </resources>
