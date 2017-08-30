@@ -92,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
             }
         }).attachToRecyclerView(stockRecyclerView);
-
+        //TODO REQUIREMENT When a user removes a quote from the Activity, the Widget is not updated
+        //TODO REQUIREMENT When a user adds a quote from the Activity, the Widget is not updated
 
     }
 
