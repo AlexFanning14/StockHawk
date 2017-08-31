@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
                 PrefUtils.removeStock(MainActivity.this, symbol);
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+                StockWidgetProvider.updateWidgetDynamically(getApplicationContext());
             }
         }).attachToRecyclerView(stockRecyclerView);
         //TODO REQUIREMENT When a user removes a quote from the Activity, the Widget is not updated
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             PrefUtils.addStock(this, symbol);
             QuoteSyncJob.syncImmediately(this);
+            StockWidgetProvider.updateWidgetDynamically(this);
         } else {
             Toast.makeText(this, getString(R.string.invalid_stock_entry_toast), Toast.LENGTH_LONG).show();
         }

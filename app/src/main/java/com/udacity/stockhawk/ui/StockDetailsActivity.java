@@ -10,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.Series;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.StockHistoryLoader;
 
@@ -26,11 +30,8 @@ public class StockDetailsActivity extends AppCompatActivity implements LoaderMan
 
     private String mSymbol;
     private float mCurrentPrice;
-    private RecyclerView mRvHistory;
     private TextView mTvSymbolHeader;
     private TextView mTvPriceHeader;
-    private StockHistoryAdapter mHisAdapter;
-    private TextView mTvErrorRv;
 
     private static final String CURRENT_PRICE_STR = "Current Price: ";
     private static final String HISTORY_STR = " History";
@@ -43,8 +44,7 @@ public class StockDetailsActivity extends AppCompatActivity implements LoaderMan
         setUpActionBar();
         findViews();
 
-        mRvHistory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRvHistory.setHasFixedSize(true);
+
         getAndSetHeaderValues();
         //TODO REQUIREMENT "Graph the stock value over time" - this should be a graphical representation
 
@@ -74,8 +74,6 @@ public class StockDetailsActivity extends AppCompatActivity implements LoaderMan
     private void findViews() {
         mTvSymbolHeader = (TextView) findViewById(R.id.tv_symbol_header);
         mTvPriceHeader = (TextView) findViewById(R.id.tv_price_header);
-        mRvHistory = (RecyclerView) findViewById(R.id.rv_history);
-        mTvErrorRv = (TextView) findViewById(R.id.rv_error);
     }
 
     private void getAndSetHeaderValues() {
@@ -109,15 +107,20 @@ public class StockDetailsActivity extends AppCompatActivity implements LoaderMan
     }
 
     private void displayHistory(ArrayList<HistoricalQuote> alHq) {
-        if (alHq == null) {
-            mTvErrorRv.setVisibility(View.VISIBLE);
-            mRvHistory.setVisibility(View.GONE);
-        } else {
-            mTvErrorRv.setVisibility(View.GONE);
-            mRvHistory.setVisibility(View.VISIBLE);
-            mHisAdapter = new StockHistoryAdapter(alHq, this);
-            mRvHistory.setAdapter(mHisAdapter);
+        GraphView graphView = (GraphView) findViewById(R.id.graph);
+        int numHistoryItems = alHq.size();
+
+        DataPoint[] dps = new DataPoint[numHistoryItems];
+
+        for (int i = 0;i < numHistoryItems;i++){
+            Integer xi = i;
+            Integer yi = alHq.get(i).getClose().intValue();
+            DataPoint dp = new DataPoint(xi,yi);
+            dps[i] = dp;
         }
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dps);
+        graphView.addSeries(series);
+
 
     }
 
