@@ -47,7 +47,7 @@ public class StockDetailsActivity extends AppCompatActivity implements LoaderMan
 
         getAndSetHeaderValues();
         //TODO REQUIREMENT "Graph the stock value over time" - this should be a graphical representation
-
+        //TODO-2 SUGGESTION Label the axes on the graph with appropriate units so the numbers are meaningful
         getSupportLoaderManager().initLoader(StockHistoryLoader.HISTORY_LOADER_ID, null, this);
         setUpLoader();
 
